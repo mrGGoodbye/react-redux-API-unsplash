@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack",
-    "start": "./node_modules/.bin/webpack-dev-server --watch-poll --hot --inline --progress --history-api-fallback "
+    "build": "webpack",
+    "start": "webpack-dev-server --watch-poll --hot --inline --progress --history-api-fallback "
   },
   "author": "A.Titarev",
   "license": "MIT",
