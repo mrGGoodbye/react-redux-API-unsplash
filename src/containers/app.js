@@ -46,7 +46,7 @@ const func_list_photo=(func_new_list_photo)=>{
 }
 
 // эта функция будет загружать еще фото
-const func_load_foto=(func_new_list_photo)=>{
+const func_load_foto=(func_new_list_photo, load_ok)=>{
    console.log('Загружаем еще фото...');
    // ДОбавим API listPhotos
    page = page + 1;
@@ -79,6 +79,7 @@ const func_load_foto=(func_new_list_photo)=>{
        propValue.map((item, i)=>{
          func_new_list_photo(propValue[i]);
        })
+       load_ok = true;
      });
      // end my code
 }
@@ -98,13 +99,14 @@ let App_Con = (props) =>{
     if(ii<=0) func_list_photo(props.func_new_list_photo);
     console.log('ii==', ++ii);
   };
-
+  let load_ok = true;
   window.onscroll = function() {
     var app2 = document.querySelector('#app2');
-    if((window.scrollY>=app2.clientHeight - window.innerHeight)&&(window.location.hash=='#/'))
+    if((load_ok)&&(window.scrollY>=app2.clientHeight - window.innerHeight+26)&&(window.location.hash=='#/'))
       {
         console.log('END!!! ',window.scrollY);
-        func_load_foto(props.func_new_list_photo);
+        load_ok = false;
+        func_load_foto(props.func_new_list_photo, load_ok);
       }
   }
   return (
