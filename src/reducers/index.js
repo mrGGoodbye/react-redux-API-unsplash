@@ -1,7 +1,7 @@
 // каждая функция редьюсера создаёт дерево State-Store
-// редьюсер для картинок по аналогии как с одной картинкой
 function IMGGESS(state=[], action){
    switch (action.type) {
+     // IMGGESS - хранит информацию о фоторграфиях
      case 'IMGGESS':
        return [
          ...state,
@@ -16,6 +16,7 @@ function IMGGESS(state=[], action){
            liked_by_user: action.liked_by_user
          }
        ]
+     // UPDATE_LIKES - для обнолвения информации о лайках
      case 'UPDATE_LIKES':
          return state.map(ev => {
            if(ev.id === action.id) {

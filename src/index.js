@@ -24,7 +24,8 @@ export const unsplash = new Unsplash({
   // Полный адрес страницы авторизации приложения (Redirect URI)
   // Важно: этот адрес обязательно должен быть указан в настройках приложения на сайте Unsplash API/Developers
   //callbackUrl: "http://www.example.com/auth"
-  callbackUrl: "http://localhost:8080"
+   callbackUrl: "http://localhost:8080"
+  // callbackUrl: "http://pppfotos.ucoz.net"
 });
 console.log('UNSPLASH===== ',unsplash);
 // Считываем GET-параметр code из URL
@@ -39,7 +40,6 @@ if (code) {
     .then(json => {
       // Сохраняем полученный токен
       unsplash.auth.setBearerToken(json.access_token);
-
     });
 }
 else{
@@ -59,12 +59,16 @@ else{
 }
 console.log('UNSPLASH===== ',unsplash);
 
+// создаем контейнер с редьюсерами
+// IMGGESS - будет хранить массив объектов с информацией о фотографиях
+// routing - для передачи Router в redux
 let reducer = combineReducers({ IMGGESS, routing: routerReducer })
+// создаем store с контейнером редьюсеров и добавляем средства отладки браузера
 let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+// создаем history для Router
 const history = syncHistoryWithStore(hashHistory, store);
 
-// с react-router
-// store={store}
+// Делаем рендер через react-роутер
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>

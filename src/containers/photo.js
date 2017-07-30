@@ -1,3 +1,4 @@
+// подключаем необходимые модули React и Unsplash
 import React from 'react';
 import { connect } from 'react-redux'
 import { action_update_like } from '../actions';
@@ -7,8 +8,10 @@ import {Router, Route, hashHistory, Link} from 'react-router';
 // эта функция будет лайкать фотографию
 const func_like = (id, func_action_update_like, liked_by_user) =>{
   console.log('LIKE!!! ', id, liked_by_user);
+// проверяем лайкал ли пользователь фото раньше
 if(liked_by_user==true){
   console.log('unlike');
+  // делаем запрос в unsplash
   unsplash.photos.unlikePhoto(id)
   .then(res => res.json())
   .then(json => {
@@ -16,11 +19,13 @@ if(liked_by_user==true){
     console.log(json);
     console.log('id= ', id);
     console.log('likes= ', json.photo.likes);
+    // вызываем функцию которая вызовет action-creator
     func_action_update_like(id, json.photo.likes, json.photo.liked_by_user);
   })
 }
 else {
   console.log('like');
+  // делаем запрос в unsplash
   unsplash.photos.likePhoto(id)
   .then(res => res.json())
   .then(json => {
@@ -28,14 +33,19 @@ else {
     console.log(json);
     console.log('id= ', id);
     console.log('likes= ', json.photo.likes);
+    // вызываем функцию которая вызовет action-creator
     func_action_update_like(id, json.photo.likes, json.photo.liked_by_user);
   })
 };
 }
 
+// создаем компонент Photo
+// будет показывать одно выбранное фото
 let Photo =(props)=>{
   console.log('PHOTOOO==', props);
+  // получаем дату
   let date = new Date(props.photooo.date);
+  // проверяем лайкалось ли фото ранашь пользователем
   let liked;
     if(props.photooo.liked_by_user==false){
       liked = "Like this photo";
@@ -43,6 +53,8 @@ let Photo =(props)=>{
     else {
       liked = "Unlike this photo";
     }
+  // возвращаем наш компонент
+  // показываем фото и информацию о нем
   return (
     <div>
       <h2>PHOTO</h2>
@@ -55,7 +67,7 @@ let Photo =(props)=>{
     </div>
     )
 }
-
+// создаем store и action-creators
 const mapStateToProps2= (state, ownProps)=>{
   console.log('ownProps==',ownProps);
   return {
